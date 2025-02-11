@@ -64,7 +64,6 @@ game = do
 
 rejectImpossible :: Int -> Maybe Int -> Maybe Int -> Int -> Bool
 rejectImpossible guess lowerBound upperBound target =
-    -- Reject if the guess is outside the bounds
     (lowerBound /= Nothing && guess <= (maybe 0 id lowerBound) && guess < target) ||
     (upperBound /= Nothing && guess >= (maybe 0 id upperBound) && guess > target)
 
@@ -72,8 +71,6 @@ rejectImpossible guess lowerBound upperBound target =
 runGameV4 :: Int -> Int -> Int -> Maybe Int -> Maybe Int -> IO ()
 runGameV4 target lim count lowerBound upperBound = do
     guess <- readNumber "Guess"
-
-    -- Check if the guess is impossible
     if rejectImpossible guess lowerBound upperBound target then do
         putStrLn "Impossible guess! Try again."
         runGameV4 target lim count lowerBound upperBound 
